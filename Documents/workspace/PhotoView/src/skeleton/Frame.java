@@ -19,10 +19,27 @@ import javax.swing.JToggleButton;
 public class Frame {
 	
 	private static JFrame frame;
+	private static PhotoViewer imageViewer;
+	private static boolean hasImage = false;
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//Create the frame.
+	private static void addPhotoViewerComponent(JFileChooser fc){
+        String path = fc.getSelectedFile().getAbsolutePath();//get the path of the image
+        
+        //if there already exists image, then the old image should be deleted
+        if(hasImage)
+        {
+        	frame.remove(imageViewer);
+        }
+        
+        imageViewer = new PhotoViewer(path);
+        hasImage = true;
+        frame.add(imageViewer,BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+        
+	}
+	
+	private static void createAndShowGUI(){
 		frame = new JFrame("Photo Viewer");
 		frame.setSize(1000, 500);
 
@@ -56,9 +73,6 @@ public class Frame {
 		fileMenuBar.add(splitmode);
 		
 		titlePanel.add(fileMenuBar);
-//		titlePanel.add(photoViewer);
-//		titlePanel.add(browser);
-//		titlePanel.add(splitmode);
 		
 		//status bar
 		JPanel statusPanel = new JPanel();
@@ -78,15 +92,31 @@ public class Frame {
 		frame.add(sidePanel,BorderLayout.WEST);
 		frame.setVisible(true);//if not, frame won't show up
 		
+		//action listener on the button of import image
 		importImage.addActionListener(new ActionListener()
 		{
 			  public void actionPerformed(ActionEvent e)
 			  {
 			    final JFileChooser fc = new JFileChooser();
-			    fc.showOpenDialog(frame);
+			    int returnVal = fc.showOpenDialog(frame);
+			    if (returnVal == JFileChooser.APPROVE_OPTION) {
+			    	addPhotoViewerComponent(fc);
+			    }else{
+			    	System.out.println("Couldn't find the file");
+			    }
+			    
+			    
 			  }
-			});
-		
+		});
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//Create the frame.
+
+		createAndShowGUI();
 		
 	}
 	
