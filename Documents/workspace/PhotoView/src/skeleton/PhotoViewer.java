@@ -37,7 +37,7 @@ public class PhotoViewer extends JComponent {
 		} else {// never goes here, never get the parameter received from the
 				// software
 			g.setColor(new Color(255, 255, 255));
-			g.fillRect(0, 0, Frame.height, Frame.width);// the way to pass
+			g.fillRect(0, 0, Frame.width, Frame.height);// the way to pass
 														// global parameters
 		
 			

@@ -59,8 +59,8 @@ public class Frame {
 
 	private static void createAndShowGUI() {
 		frame = new JFrame("Photo Viewer");
-		frame.setSize(1000, 500);
-		frame.setMinimumSize(new Dimension(1000,500));
+		frame.setSize(1000, 1000);
+		frame.setMinimumSize(new Dimension(1000,1000));
 
 		JPanel titlePanel = new JPanel();
 
@@ -148,7 +148,7 @@ public class Frame {
 								freeHand.add(text);
 								Dimension size = text.getPreferredSize();
 								text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-								text.setBounds(e.getX(),e.getY(),200,20);
+								text.setBounds(e.getX(),e.getY(),100,20);
 								frame.pack();
 								frame.repaint();
 							}
@@ -179,8 +179,15 @@ public class Frame {
 				        	
 				        });
 						
-						height = imageViewer.getHeight();
-						width = imageViewer.getWidth();
+						try {
+							height = ImageIO.read(new File(path)).getHeight();
+							width = ImageIO.read(new File(path)).getWidth();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						System.out.println(height+" "+width);
 						frame.remove(imageViewer);
 						flipImage = true;
 						imageViewer = new PhotoViewer(path);

@@ -19,9 +19,9 @@ public class ScrollImageTest  extends JPanel {
     private BufferedImage image;
     private JPanel canvas;
 
-    public ScrollImageTest() {
+    public ScrollImageTest(String path) {
         try {
-            this.image = ImageIO.read(new File("/Users/Yuebai/Desktop/2寸.jpg"));
+            this.image = ImageIO.read(new File(path));
         }catch(IOException ex) {
             Logger.getLogger(ScrollImageTest.class.getName()).log(Level.SEVERE, null, ex);
         }
