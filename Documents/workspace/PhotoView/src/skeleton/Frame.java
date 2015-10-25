@@ -2,11 +2,18 @@ package skeleton;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -16,7 +23,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
+
 
 public class Frame {
 
@@ -26,12 +35,11 @@ public class Frame {
 	static boolean flipImage = false;// whether the image has been flipped
 	static int width, height;
 	private static String path;
-	
+	private static FreeHand freeHand = new FreeHand();
 	
 	private static void addPhotoViewerComponent(JFileChooser fc) {
 		path = fc.getSelectedFile().getAbsolutePath();// get the path of
-																// the image
-
+		
 		// if there already exists image, then the old image should be deleted
 		if (hasImage) {
 			frame.remove(imageViewer);
@@ -39,6 +47,8 @@ public class Frame {
 
 		imageViewer = new PhotoViewer(path);
 		hasImage = true;
+		//JPanel p = new ScrollImageTest();
+		//frame.add(p);
 		frame.add(imageViewer, BorderLayout.CENTER);
 		frame.pack();
 		frame.setVisible(true);
@@ -118,23 +128,33 @@ public class Frame {
 								
 				if (hasImage) {
 					if(!flipImage){
+						
+				        DrawingListener listener = new DrawingListener(freeHand);
+				        freeHand.addMouseListener(listener);
+				        freeHand.addMouseMotionListener(listener);
+						
 						height = imageViewer.getHeight();
 						width = imageViewer.getWidth();
 						frame.remove(imageViewer);
 						flipImage = true;
 						imageViewer = new PhotoViewer(path);
-						frame.add(imageViewer, BorderLayout.CENTER);
+						//frame.add(imageViewer, BorderLayout.CENTER);
+						frame.add(freeHand,BorderLayout.CENTER);
 						frame.pack();
 						frame.repaint();//repaint is refresh the current interface
+						
+
 
 						
 					}else{
+						frame.remove(freeHand);
 						frame.remove(imageViewer);
 						flipImage = false;
 						imageViewer = new PhotoViewer(path);
 						frame.add(imageViewer, BorderLayout.CENTER);
 						frame.pack();//pack is necessary after adding the widget to the frame
 						frame.repaint();
+						
 					}
 				
 				}

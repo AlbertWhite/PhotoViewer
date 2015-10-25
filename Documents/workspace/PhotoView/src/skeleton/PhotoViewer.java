@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+
 
 public class PhotoViewer extends JComponent {
 
@@ -37,6 +39,8 @@ public class PhotoViewer extends JComponent {
 			g.setColor(new Color(255, 255, 255));
 			g.fillRect(0, 0, Frame.height, Frame.width);// the way to pass
 														// global parameters
+		
+			
 		}
 	}
 
