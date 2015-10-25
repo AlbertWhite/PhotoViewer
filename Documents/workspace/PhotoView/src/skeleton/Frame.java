@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -24,6 +25,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 
@@ -132,6 +134,50 @@ public class Frame {
 				        DrawingListener listener = new DrawingListener(freeHand);
 				        freeHand.addMouseListener(listener);
 				        freeHand.addMouseMotionListener(listener);
+				        
+				        freeHand.addMouseListener(new MouseListener() {
+
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								// TODO Auto-generated method stub
+								System.out.println(e.getY()+e.getX());
+								
+								
+								JTextField text = new JTextField("click to input");
+								freeHand.setLayout(null);
+								freeHand.add(text);
+								Dimension size = text.getPreferredSize();
+								text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+								text.setBounds(e.getX(),e.getY(),200,20);
+								frame.pack();
+								frame.repaint();
+							}
+
+							@Override
+							public void mousePressed(MouseEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void mouseReleased(MouseEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void mouseEntered(MouseEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void mouseExited(MouseEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+				        	
+				        });
 						
 						height = imageViewer.getHeight();
 						width = imageViewer.getWidth();
