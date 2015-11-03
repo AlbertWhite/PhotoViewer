@@ -1,3 +1,7 @@
+//MVC 3 classes model:annotion, drawing, whether it is flipped
+//增加slider在两侧。重新调整布局
+//自定义写字的控件
+
 package skeleton;
 
 import java.awt.BorderLayout;
