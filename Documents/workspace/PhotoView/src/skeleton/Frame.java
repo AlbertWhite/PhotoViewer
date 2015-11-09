@@ -5,6 +5,7 @@
 package skeleton;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -39,11 +40,13 @@ public class Frame {
 
 	private static JFrame frame;
 	private static PhotoViewer imageViewer;
+	private static JScrollPane sp;
 	private static JToggleButton toggleButton = null;
 	private static boolean hasImage = false;// whether there is an image
 	static boolean flipImage = false;// whether the image has been flipped
 	static int width, height;
 	private static String path;
+	static int image_width, image_height;
 	private static FreeHand freeHand = new FreeHand();
 
 	private static void addPhotoViewerComponent(JFileChooser fc) {
@@ -51,14 +54,15 @@ public class Frame {
 
 		// if there already exists image, then the old image should be deleted
 		if (hasImage) {
-			frame.remove(imageViewer);
+			frame.remove(sp);
 		}
-
+		
 		imageViewer = new PhotoViewer(path);
+		imageViewer.setSize(new Dimension(image_width,image_height));
+		imageViewer.setPreferredSize(new Dimension(image_width,image_height));
+		sp = new JScrollPane(imageViewer);//put the imageviewer into a scrollpane
+		frame.add(sp, BorderLayout.CENTER);
 		hasImage = true;
-		JPanel p = new ScrollImageTest(path);
-		frame.add(p);
-		// frame.add(imageViewer, BorderLayout.CENTER);
 		frame.pack();
 		frame.setVisible(true);
 
@@ -66,10 +70,7 @@ public class Frame {
 
 	private static void createAndShowGUI() {
 		frame = new JFrame("Photo Viewer");
-		frame.setSize(200, 200);
-		// frame.setMinimumSize(new Dimension(1000,1000));
-
-		JPanel titlePanel = new JPanel();
+		frame.setSize(600, 600);
 
 		// title menu
 		JMenu fileManu = new JMenu("File");
@@ -100,6 +101,7 @@ public class Frame {
 
 		// status bar
 		JPanel statusPanel = new JPanel();
+		statusPanel.setBackground(Color.WHITE);
 		JLabel label = new JLabel("Status Bar");
 		statusPanel.add(label);
 

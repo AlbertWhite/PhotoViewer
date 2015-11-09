@@ -23,6 +23,8 @@ public class PhotoViewer extends JComponent {
 	public PhotoViewer(String path) {
 		try {
 			this.image = ImageIO.read(new File(path));
+			Frame.image_height = image.getHeight();
+			Frame.image_width = image.getWidth();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Couldn't find the file: " + path);
