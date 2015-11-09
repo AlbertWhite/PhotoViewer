@@ -7,9 +7,6 @@ package skeleton;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,8 +15,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -30,7 +25,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -38,15 +32,16 @@ import javax.swing.JToggleButton;
 
 public class Frame {
 
-	private static JFrame frame;
-	private static PhotoViewer imageViewer;
-	private static JScrollPane sp;
+	static JFrame frame;
+	static PhotoViewer imageViewer;
+	static JScrollPane sp;
 	private static JToggleButton toggleButton = null;
 	private static boolean hasImage = false;// whether there is an image
 	static boolean flipImage = false;// whether the image has been flipped
 	static int width, height;
-	private static String path;
+	static String path;
 	static int image_width, image_height;
+	static MouseListener spMouseListener;
 	private static FreeHand freeHand = new FreeHand();
 
 	private static void addPhotoViewerComponent(JFileChooser fc) {
@@ -56,16 +51,57 @@ public class Frame {
 		if (hasImage) {
 			frame.remove(sp);
 		}
-		
+
 		imageViewer = new PhotoViewer(path);
-		imageViewer.setSize(new Dimension(image_width,image_height));
-		imageViewer.setPreferredSize(new Dimension(image_width,image_height));
-		sp = new JScrollPane(imageViewer);//put the imageviewer into a scrollpane
+		imageViewer.setSize(new Dimension(image_width, image_height));
+		imageViewer.setPreferredSize(new Dimension(image_width, image_height));
+		sp = new JScrollPane(imageViewer);// put the imageviewer into a scrollpane
 		frame.add(sp, BorderLayout.CENTER);
 		hasImage = true;
 		frame.pack();
 		frame.setVisible(true);
+		
+		spMouseListener = new MouseListener(){
+		
 
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getClickCount() == 2 && !e.isConsumed()) {
+					e.consume();
+					if (hasImage) {
+						if (!flipImage) {
+							frame.remove(sp);
+							flipImage = true;
+							DrawingListener listener = new DrawingListener(freeHand);
+							freeHand.addMouseListener(listener);
+							freeHand.addMouseMotionListener(listener);
+							freeHand.setPreferredSize(new Dimension(image_width, image_height));
+							frame.add(freeHand);
+							frame.pack();
+							frame.repaint();// repaint is refresh the current
+						}
+					}
+				}
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}};
+			
+			sp.addMouseListener(spMouseListener);
 	}
 
 	private static void createAndShowGUI() {
@@ -92,7 +128,7 @@ public class Frame {
 		modeMenu.add(photoviewer);
 		modeMenu.add(browser);
 		modeMenu.add(split);
-		
+
 		JMenuBar fileMenuBar = new JMenuBar();
 
 		fileMenuBar.add(fileManu);
@@ -130,10 +166,11 @@ public class Frame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				System.out.println("xxx");
 				if (hasImage) {
+					System.out.println("2");
 					if (!flipImage) {
-
+						System.out.println("xyb");
 						DrawingListener listener = new DrawingListener(freeHand);
 						freeHand.addMouseListener(listener);
 						freeHand.addMouseMotionListener(listener);
