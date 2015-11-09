@@ -71,6 +71,7 @@ class DrawingListener extends MouseInputAdapter {
 	public void mouseClicked(MouseEvent e) {
 
 		if (e.getClickCount() == 2 && !e.isConsumed()) {
+			e.consume();
 			Frame.frame.remove(freeHand);
 			Frame.flipImage = false;
 			Frame.imageViewer = new PhotoViewer(Frame.path);
@@ -81,10 +82,17 @@ class DrawingListener extends MouseInputAdapter {
 			// scrollpane
 			Frame.sp.addMouseListener(Frame.spMouseListener);
 			Frame.frame.add(Frame.sp, BorderLayout.CENTER);
-			Frame.frame.pack();// pack is necessary after adding the
-								// widget to the frame
+			Frame.frame.pack();// pack is necessary after adding the widget to
+								// the frame
+			Frame.frame.repaint();
+		} else {
+			JTextField text = new JTextField("click to input");
+			freeHand.setLayout(null);
+			freeHand.add(text);
+			text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+			text.setBounds(e.getX() + 10, e.getY() + 10, 100, 20);
+			Frame.frame.pack();
 			Frame.frame.repaint();
 		}
-
 	}
 }

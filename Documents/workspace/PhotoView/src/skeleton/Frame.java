@@ -55,14 +55,14 @@ public class Frame {
 		imageViewer = new PhotoViewer(path);
 		imageViewer.setSize(new Dimension(image_width, image_height));
 		imageViewer.setPreferredSize(new Dimension(image_width, image_height));
-		sp = new JScrollPane(imageViewer);// put the imageviewer into a scrollpane
+		sp = new JScrollPane(imageViewer);// put the imageviewer into a
+											// scrollpane
 		frame.add(sp, BorderLayout.CENTER);
 		hasImage = true;
 		frame.pack();
 		frame.setVisible(true);
-		
-		spMouseListener = new MouseListener(){
-		
+
+		spMouseListener = new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -80,28 +80,34 @@ public class Frame {
 							frame.add(freeHand);
 							frame.pack();
 							frame.repaint();// repaint is refresh the current
+
 						}
 					}
 				}
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 			}
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-			}};
-			
-			sp.addMouseListener(spMouseListener);
+			}
+		};
+
+		sp.addMouseListener(spMouseListener);
 	}
 
 	private static void createAndShowGUI() {
@@ -157,115 +163,6 @@ public class Frame {
 				} else {
 					System.out.println("Couldn't find the file");
 				}
-
-			}
-		});
-
-		frame.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("xxx");
-				if (hasImage) {
-					System.out.println("2");
-					if (!flipImage) {
-						System.out.println("xyb");
-						DrawingListener listener = new DrawingListener(freeHand);
-						freeHand.addMouseListener(listener);
-						freeHand.addMouseMotionListener(listener);
-
-						freeHand.addMouseListener(new MouseListener() {
-
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								// TODO Auto-generated method stub
-								System.out.println(e.getY() + e.getX());
-
-								JTextField text = new JTextField("click to input");
-								freeHand.setLayout(null);
-								freeHand.add(text);
-								Dimension size = text.getPreferredSize();
-								text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-								text.setBounds(e.getX(), e.getY(), 100, 20);
-								frame.pack();
-								frame.repaint();
-							}
-
-							@Override
-							public void mousePressed(MouseEvent e) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void mouseReleased(MouseEvent e) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void mouseEntered(MouseEvent e) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void mouseExited(MouseEvent e) {
-								// TODO Auto-generated method stub
-
-							}
-
-						});
-
-						try {
-							height = ImageIO.read(new File(path)).getHeight();
-							width = ImageIO.read(new File(path)).getWidth();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-
-						System.out.println(height + " " + width);
-						frame.remove(imageViewer);
-						flipImage = true;
-						imageViewer = new PhotoViewer(path);
-						// frame.add(imageViewer, BorderLayout.CENTER);
-						frame.add(freeHand, BorderLayout.CENTER);
-						frame.pack();
-						frame.repaint();// repaint is refresh the current
-										// interface
-
-					} else {
-						frame.remove(freeHand);
-						frame.remove(imageViewer);
-						flipImage = false;
-						imageViewer = new PhotoViewer(path);
-						frame.add(imageViewer, BorderLayout.CENTER);
-						frame.pack();// pack is necessary after adding the
-										// widget to the frame
-						frame.repaint();
-
-					}
-
-				}
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
 
 			}
 		});
